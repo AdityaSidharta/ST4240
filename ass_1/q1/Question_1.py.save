@@ -42,7 +42,7 @@ NN_model = Model(inputs=inputs, outputs=X, name='NN_Model')
 
 NN_model.compile('adam', 'mean_squared_error' , metrics=['accuracy'])
 
-NN_model.fit(X_train, Y_train, epochs=70, batch_size=32)
+NN_model.fit(X_train, Y_train, epochs=1, batch_size=32)
 
 NN_model.save('NN_model.h5') 
 
@@ -54,6 +54,6 @@ xgb_params = {
     "min_child_weight" : np.arange(1, 6, 1),
     'colsample_bytree' : np.arange(0.7, 1.01 ,0.1)
 }
-xgb_CV_model = RandomizedSearchCV(estimator=xgb_model, param_distributions=xgb_params, n_iter= 60, scoring='neg_mean_squared_error', cv=3, verbose=4, n_jobs = 1,  return_train_score = True).fit(X_train, Y_train)
+xgb_CV_model = RandomizedSearchCV(estimator=xgb_model, param_distributions=xgb_params, n_iter= 2, scoring='neg_mean_squared_error', cv=3, verbose=4, n_jobs = 1,  return_train_score = True).fit(X_train, Y_train)
 
 joblib.dump(xgb_CV_model, 'xgb_CV_model.pkl')
